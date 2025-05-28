@@ -2,7 +2,7 @@ package com.pluralsight;
 
 import java.util.Scanner;
 
-// 1. SandCodeApp.java - Entry point of the application
+// Entry point of the application
 public class SandCodeApp {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
