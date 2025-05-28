@@ -21,8 +21,7 @@ public class SandCodeApp {
             switch (choice) {
                 case "1":
                     currentOrder = new Order();
-                    currentOrder.create(scanner);
-                    currentOrder.printSummary();
+                    currentOrder.orderMenu(scanner); // switched from create() to full menu
                     break;
                 case "0":
                     isRunning = false;
@@ -36,6 +35,7 @@ public class SandCodeApp {
         scanner.close();
     }
 
+    // Welcome banner
     private static void printWelcomeScreen() {
         System.out.println("╔══════════════════════════════════════╗");
         System.out.println("║           WELCOME TO SANDCODE        ║");
