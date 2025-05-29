@@ -1,22 +1,17 @@
-package com.pluralsight;
+package com.pluralsight; // Paket bildirimi
 
-// 5. Chip.java - Represents chips with type and fixed price
 public class Chip {
-    private String type;
+    private String type; // Type of chips (e.g., "Regular", "Cheesy") - Cips türü
 
-    public Chip(String type) {
-        this.type = type;
+    public Chip(String type) { // Constructor for Chip class - Cips sınıfının yapıcı metodu
+        this.type = type; // Türü ayarla
     }
 
-    public String getType() {
-        return type;
-    }
+    // Getter for chip type - Cips türünün getter metodu
+    public String getType() { return type; }
 
-    public double getPrice() {
-        return 1.50;
-    }
-
-    public void print() {
-        System.out.printf("Chips: %s - $%.2f\n", type, getPrice());
+    // Calculates the cost of the chips (fixed price) - Cipsin maliyetini hesaplar (sabit fiyat)
+    public double getCost() {
+        return 1.50; // Fixed price for chips - Cipsler için sabit fiyat
     }
 }

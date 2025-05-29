@@ -1,0 +1,14 @@
+----- DELI-cious Receipt -----
+Date: 2025-05-29 18:35:57
+--------------------------
+Order Details:
+Sandwiches:
+  - 12" rye Sandwich (Toasted)
+    Meats: steak 
+    Cheeses: swiss 
+    Other Toppings: lettuce, cucumbers 
+    Sauces: mayo 
+    Price: $13.75
+--------------------------
+Total Amount: $13.75
+--------------------------
