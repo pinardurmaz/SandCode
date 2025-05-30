@@ -1,45 +1,43 @@
-package com.pluralsight; // Paket bildirimi
+package com.pluralsight;
 
-import java.util.Scanner; // Scanner sınıfını kullanmak için
+import java.util.Scanner;
 
 // Entry point of the application
 public class SandCodeApp {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in); // Kullanıcıdan girdi almak için Scanner nesnesi
-        Order currentOrder = null; // Mevcut siparişi tutacak
-        boolean isRunning = true; // Uygulamanın çalışıp çalışmadığını kontrol eden bayrak
+        Scanner scanner = new Scanner(System.in);
+        Order currentOrder = null;
+        boolean isRunning = true;
 
-        // Uygulama başladığında fiş klasörünü oluşturmayı dene
         ReceiptWriter.createReceiptsFolder();
 
-        printWelcomeScreen(); // Karşılama ekranını göster
+        printWelcomeScreen();
 
-        while (isRunning) { // Uygulama çalıştığı sürece döngü devam eder
-            System.out.println("\n=== MAIN MENU ==="); // Ana menü başlığı
-            System.out.println("1) Start New Order"); // Yeni sipariş başlat seçeneği
-            System.out.println("0) Exit"); // Çıkış seçeneği
-            System.out.print("Enter your choice: "); // Kullanıcıdan seçim iste
-            String choice = scanner.nextLine(); // Kullanıcının seçimini al
+        while (isRunning) {
+            System.out.println("\n=== MAIN MENU ===");
+            System.out.println("1) Start New Order");
+            System.out.println("0) Exit");
+            System.out.print("Enter your choice: ");
+            String choice = scanner.nextLine();
 
-            switch (choice) { // Seçime göre işlem yap
+            switch (choice) {
                 case "1":
-                    currentOrder = new Order(scanner); // Yeni bir sipariş nesnesi oluştur, scanner'ı Order'a geç
-                    currentOrder.handleOrderFlow(); // Sipariş akışını başlat (Order sınıfındaki metot)
+                    currentOrder = new Order(scanner);
+                    currentOrder.handleOrderFlow();
                     break;
                 case "0":
-                    isRunning = false; // Döngüden çıkmak için bayrağı false yap
-                    System.out.println("Thank you for using SandCode. Have a great day!"); // Çıkış mesajı
+                    isRunning = false;
+                    System.out.println("Thank you for using SandCode. Have a great day!");
                     break;
                 default:
-                    System.out.println("Invalid input. Please enter 1 or 0."); // Geçersiz giriş mesajı
+                    System.out.println("Invalid input. Please enter 1 or 0.");
             }
         }
 
-        scanner.close(); // Uygulama kapanırken scanner'ı kapat
+        scanner.close();
     }
 
     // Welcome banner
-    // Karşılama ekranı başlığı
     private static void printWelcomeScreen() {
         System.out.println("╔══════════════════════════════════════╗");
         System.out.println("║           WELCOME TO SANDCODE        ║");

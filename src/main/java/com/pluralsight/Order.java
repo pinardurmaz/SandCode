@@ -1,390 +1,382 @@
-package com.pluralsight; // Paket bildirimi
+package com.pluralsight;
 
-import java.util.ArrayList; // ArrayList sınıfını kullanmak için
-import java.util.List; // List arayüzünü kullanmak için
-import java.util.Scanner; // Scanner sınıfını kullanmak için
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class Order {
-    private List<Sandwich> sandwiches; // Siparişteki sandviçlerin listesi
-    private List<Drink> drinks; // Siparişteki içeceklerin listesi
-    private List<Chip> chips; // Siparişteki cipslerin listesi
-    private Scanner scanner; // Kullanıcıdan girdi almak için scanner
+    private List<Sandwich> sandwiches;
+    private List<Drink> drinks;
+    private List<Chip> chips;
+    private Scanner scanner;
 
-    public Order(Scanner scanner) { // Constructor, scanner'ı parametre olarak alır
-        this.sandwiches = new ArrayList<>(); // Sandviç listesini başlat
-        this.drinks = new ArrayList<>(); // İçecek listesini başlat
-        this.chips = new ArrayList<>(); // Cips listesini başlat
-        this.scanner = scanner; // Scanner'ı ata
+    public Order(Scanner scanner) {
+        this.sandwiches = new ArrayList<>();
+        this.drinks = new ArrayList<>();
+        this.chips = new ArrayList<>();
+        this.scanner = scanner;
     }
 
     // Adds a sandwich to the order.
     public void addSandwich(Sandwich sandwich) {
-        this.sandwiches.add(sandwich); // Sandviçi listeye ekle
+        this.sandwiches.add(sandwich);
     }
 
     // Adds a drink to the order.
     public void addDrink(Drink drink) {
-        this.drinks.add(drink); // İçeceği listeye ekle
+        this.drinks.add(drink);
     }
 
     // Adds chips to the order.
     public void addChip(Chip chip) {
-        this.chips.add(chip); // Cipsi listeye ekle
+        this.chips.add(chip);
     }
 
     // Calculates the total cost of the order.
     public double calculateTotalCost() {
-        double totalCost = 0.0; // Toplam maliyeti sıfırla
+        double totalCost = 0.0;
         for (Sandwich s : sandwiches) {
-            totalCost += s.calculateCost(); // Her sandviçin maliyetini ekle
+            totalCost += s.calculateCost();
         }
         for (Drink d : drinks) {
-            totalCost += d.getCost(); // Her içeceğin maliyetini ekle
+            totalCost += d.getCost();
         }
         for (Chip c : chips) {
-            totalCost += c.getCost(); // Her cipsin maliyetini ekle
+            totalCost += c.getCost();
         }
-        return totalCost; // Toplam maliyeti döndür
+        return totalCost;
     }
 
     // Displays the detailed order summary to the console in a receipt-like format.
-    // Detaylı sipariş özetini konsola fiş benzeri bir formatta gösterir.
     public void displayOrderDetails() {
-        System.out.println("\n===================================="); // Fiş başlangıç çizgisi
-        System.out.println("          SandCode Order             "); // Fiş başlığı
-        System.out.println("===================================="); // Fiş başlık alt çizgisi
+        System.out.println("\n====================================");
+        System.out.println("          SandCode Order             ");
+        System.out.println("====================================");
 
         if (sandwiches.isEmpty() && drinks.isEmpty() && chips.isEmpty()) {
-            System.out.println("Your order is currently empty."); // Siparişin boş olduğunu belirt
-            System.out.println("===================================="); // Fiş bitiş çizgisi
+            System.out.println("Your order is currently empty.");
+            System.out.println("====================================");
             return;
         }
 
-        System.out.println("\n--- SANDWICHES ---"); // Sandviçler bölüm başlığı
+        System.out.println("\n--- SANDWICHES ---");
         if (sandwiches.isEmpty()) {
-            System.out.println("  No sandwiches added."); // Sandviç yoksa
+            System.out.println("  No sandwiches added.");
         } else {
             for (int i = 0; i < sandwiches.size(); i++) {
-                System.out.println("  #" + (i + 1) + " Sandwich Details:"); // Sandviç numarası
-                // Sandwich.getDetails() metodu zaten detayları formatlıyor
-                // Burada her satırın başında boşluk bırakarak daha iyi hizalama sağlayabiliriz
+                System.out.println("  #" + (i + 1) + " Sandwich Details:");
                 String[] sandwichDetails = sandwiches.get(i).getDetails().split("\n");
                 for (String detailLine : sandwichDetails) {
-                    System.out.println("  " + detailLine); // Her detay satırını girintili yazdır
+                    System.out.println("  " + detailLine);
                 }
-                System.out.println("  --------------------"); // Sandviç ayırıcı
+                System.out.println("  --------------------");
             }
         }
 
-        System.out.println("\n--- DRINKS ---"); // İçecekler bölüm başlığı
+        System.out.println("\n--- DRINKS ---");
         if (drinks.isEmpty()) {
-            System.out.println("  No drinks added."); // İçecek yoksa
+            System.out.println("  No drinks added.");
         } else {
             for (Drink d : drinks) {
-                System.out.printf("  - %-15s %-10s $%.2f\n", d.getSize(), d.getFlavor(), d.getCost()); // İçecek detaylarını formatlı yazdır
+                System.out.printf("  - %-15s %-10s $%.2f\n", d.getSize(), d.getFlavor(), d.getCost());
             }
         }
 
-        System.out.println("\n--- CHIPS ---"); // Cipsler bölüm başlığı
+        System.out.println("\n--- CHIPS ---");
         if (chips.isEmpty()) {
-            System.out.println("  No chips added."); // Cips yoksa
-        } else {
+            System.out.println("  No chips added.");
             for (Chip c : chips) {
-                System.out.printf("  - %-25s $%.2f\n", c.getType(), c.getCost()); // Cips detaylarını formatlı yazdır
+                System.out.printf("  - %-25s $%.2f\n", c.getType(), c.getCost());
             }
         }
 
-        System.out.println("\n===================================="); // Toplam öncesi ayırıcı
-        System.out.printf("TOTAL AMOUNT:             $%.2f\n", calculateTotalCost()); // Toplam tutarı formatlı yazdır
-        System.out.println("===================================="); // Fiş bitiş çizgisi
-        System.out.println("  Thank you for your order!         "); // Teşekkür mesajı
-        System.out.println("===================================="); // Fiş bitiş çizgisi
+        System.out.println("\n====================================");
+        System.out.printf("TOTAL AMOUNT:             $%.2f\n", calculateTotalCost());
+        System.out.println("====================================");
+        System.out.println("  Thank you for your order!         ");
+        System.out.println("====================================");
     }
 
     // Generates the receipt content as a String.
     public String generateReceiptContent() {
-        StringBuilder receipt = new StringBuilder(); // Fiş içeriği için StringBuilder
-        receipt.append("====================================\n"); // Fiş başlangıç çizgisi
-        receipt.append("          DELI-cious Receipt        \n"); // Fiş başlığı
-        receipt.append("====================================\n"); // Fiş başlık alt çizgisi
-        receipt.append("Date: ").append(java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))).append("\n"); // Tarih ve saat
-        receipt.append("------------------------------------\n"); // Ayırıcı
-        receipt.append("Order Details:\n"); // Sipariş detayları başlığı
+        StringBuilder receipt = new StringBuilder();
+        receipt.append("====================================\n");
+        receipt.append("          SandCode Receipt        \n");
+        receipt.append("====================================\n");
+        receipt.append("Date: ").append(java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))).append("\n");
+        receipt.append("------------------------------------\n");
+        receipt.append("Order Details:\n");
 
         if (!sandwiches.isEmpty()) {
-            receipt.append("\n--- SANDWICHES ---\n"); // Sandviçler başlığı
+            receipt.append("\n--- SANDWICHES ---\n");
             for (Sandwich s : sandwiches) {
                 String[] sandwichDetails = s.getDetails().split("\n");
                 for (String detailLine : sandwichDetails) {
-                    receipt.append("  ").append(detailLine).append("\n"); // Her detay satırını girintili ekle
+                    receipt.append("  ").append(detailLine).append("\n");
                 }
-                receipt.append("  --------------------\n"); // Sandviç ayırıcı
+                receipt.append("  --------------------\n");
             }
         }
         if (!drinks.isEmpty()) {
-            receipt.append("\n--- DRINKS ---\n"); // İçecekler başlığı
+            receipt.append("\n--- DRINKS ---\n");
             for (Drink d : drinks) {
-                receipt.append(String.format("  - %-15s %-10s $%.2f\n", d.getSize(), d.getFlavor(), d.getCost())); // İçecek detaylarını formatlı ekle
+                receipt.append(String.format("  - %-15s %-10s $%.2f\n", d.getSize(), d.getFlavor(), d.getCost()));
             }
         }
         if (!chips.isEmpty()) {
-            receipt.append("\n--- CHIPS ---\n"); // Cipsler başlığı
+            receipt.append("\n--- CHIPS ---\n");
             for (Chip c : chips) {
-                receipt.append(String.format("  - %-25s $%.2f\n", c.getType(), c.getCost())); // Cips detaylarını formatlı ekle
+                receipt.append(String.format("  - %-25s $%.2f\n", c.getType(), c.getCost()));
             }
         }
 
-        receipt.append("\n====================================\n"); // Toplam öncesi ayırıcı
-        receipt.append(String.format("TOTAL AMOUNT:             $%.2f\n", calculateTotalCost())); // Toplam tutarı formatlı ekle
-        receipt.append("====================================\n"); // Fiş bitiş çizgisi
-        receipt.append("  Thank you for your order!         \n"); // Teşekkür mesajı
-        receipt.append("====================================\n"); // Fiş bitiş çizgisi
-        return receipt.toString(); // Fiş içeriğini döndür
+        receipt.append("\n====================================\n");
+        receipt.append(String.format("TOTAL AMOUNT:             $%.2f\n", calculateTotalCost()));
+        receipt.append("====================================\n");
+        receipt.append("  Thank you for your order!         \n");
+        receipt.append("====================================\n");
+        return receipt.toString();
     }
 
     // Handles the flow of adding items to the order.
     public void handleOrderFlow() {
-        int orderChoice; // Sipariş menüsü seçimi
+        int orderChoice;
         do {
-            displayOrderMenu(); // Sipariş menüsünü göster
-            orderChoice = getUserChoice(); // Kullanıcının seçimini al
+            displayOrderMenu();
+            orderChoice = getUserChoice();
 
             switch (orderChoice) {
                 case 1:
-                    addSandwichToOrder(); // Sandviç ekle
+                    addSandwichToOrder();
                     break;
                 case 2:
-                    addDrinkToOrder(); // İçecek ekle
+                    addDrinkToOrder();
                     break;
                 case 3:
-                    addChipsToOrder(); // Cips ekle
+                    addChipsToOrder();
                     break;
                 case 4:
-                    checkoutOrder(); // Ödeme yap
-                    orderChoice = 0; // Checkout sonrası ana menüye dönmek için döngüden çık
+                    checkoutOrder();
+                    orderChoice = 0;
                     break;
                 case 0:
-                    cancelOrder(); // Siparişi iptal et
-                    orderChoice = 0; // Siparişi iptal ettikten sonra ana menüye dönmek için döngüden çık
+                    cancelOrder();
+                    orderChoice = 0;
                     break;
                 default:
-                    System.out.println("Invalid option. Please try again."); // Geçersiz seçenek mesajı
+                    System.out.println("Invalid option. Please try again.");
             }
-        } while (orderChoice != 0); // Kullanıcı 0'ı seçene kadar döngü devam et
+        } while (orderChoice != 0);
     }
 
     // Displays the order menu options.
     private void displayOrderMenu() {
-        System.out.println("\n--- Order Menu ---"); // Sipariş menüsü başlığı
-        System.out.println("1) Add Sandwich"); // Sandviç ekle seçeneği
-        System.out.println("2) Add Drink"); // İçecek ekle seçeneği
-        System.out.println("3) Add Chips"); // Cips ekle seçeneği
-        System.out.println("4) Checkout"); // Ödeme yap seçeneği
-        System.out.println("0) Cancel Order"); // Siparişi iptal et seçeneği
-        System.out.print("Enter your choice: "); // Kullanıcıdan seçim iste
+        System.out.println("\n--- Order Menu ---");
+        System.out.println("1) Add Sandwich");
+        System.out.println("2) Add Drink");
+        System.out.println("3) Add Chips");
+        System.out.println("4) Checkout");
+        System.out.println("0) Cancel Order");
+        System.out.print("Enter your choice: ");
     }
 
     // Gets integer input from the user, handling invalid inputs.
     private int getUserChoice() {
-        while (!scanner.hasNextInt()) { // Kullanıcı tam sayı girmeyene kadar
-            System.out.println("Invalid input. Please enter a number."); // Geçersiz giriş mesajı
-            scanner.next(); // Yanlış girdiyi tüket
-            System.out.print("Enter your choice: "); // Tekrar seçim iste
+        while (!scanner.hasNextInt()) {
+            System.out.println("Invalid input. Please enter a number.");
+            scanner.next();
+            System.out.print("Enter your choice: ");
         }
-        int choice = scanner.nextInt(); // Sayıyı al
-        scanner.nextLine(); // Boş satırı tüket (enter tuşu için)
-        return choice; // Seçimi döndür
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        return choice;
     }
 
     // Guides the user through adding a sandwich to the current order.
-    // Kullanıcıya mevcut siparişe sandviç ekleme sürecinde rehberlik eder.
     private void addSandwichToOrder() {
-        System.out.println("\n--- Add Sandwich ---"); // Sandviç ekle başlığı
-        System.out.println("1) Choose a Signature Sandwich"); // İmzalı sandviç seçeneği
-        System.out.println("2) Build a Custom Sandwich"); // Özel sandviç oluştur seçeneği
-        System.out.print("Enter your choice: "); // Kullanıcıdan seçim iste
+        System.out.println("\n--- Add Sandwich ---");
+        System.out.println("1) Choose a Signature Sandwich");
+        System.out.println("2) Build a Custom Sandwich");
+        System.out.print("Enter your choice: ");
 
-        int sandwichTypeChoice = getUserChoice(); // Sandviç türü seçimini al
+        int sandwichTypeChoice = getUserChoice();
 
         if (sandwichTypeChoice == 1) {
-            addSignatureSandwich(); // İmzalı sandviç ekle
+            addSignatureSandwich();
         } else if (sandwichTypeChoice == 2) {
-            addCustomSandwich(); // Özel sandviç ekle
+            addCustomSandwich();
         } else {
-            System.out.println("Invalid choice. Returning to order menu."); // Geçersiz seçim mesajı
+            System.out.println("Invalid choice. Returning to order menu.");
         }
     }
 
     // Guides the user through adding a signature sandwich.
-    // Kullanıcıya imzalı sandviç ekleme sürecinde rehberlik eder.
     private void addSignatureSandwich() {
-        System.out.println("\n--- Choose Signature Sandwich ---"); // İmzalı sandviç seç başlığı
-        System.out.println("1) BLT (White Bread, Bacon, Cheddar, Lettuce, Tomato, Ranch, Toasted)"); // BLT seçeneği
-        System.out.println("2) Philly Cheese Steak (White Bread, Steak, American Cheese, Peppers, Mayo, Toasted)"); // Philly Cheese Steak seçeneği
-        System.out.print("Enter your choice: "); // Kullanıcıdan seçim iste
+        System.out.println("\n--- Choose Signature Sandwich ---");
+        System.out.println("1) BLT (White Bread, Bacon, Cheddar, Lettuce, Tomato, Ranch, Toasted)");
+        System.out.println("2) Philly Cheese Steak (White Bread, Steak, American Cheese, Peppers, Mayo, Toasted)");
+        System.out.print("Enter your choice: ");
 
-        int signatureChoice = getUserChoice(); // İmzalı sandviç seçimini al
-        int size = 8; // Signature sandwiches are typically 8" - İmzalı sandviçler genellikle 8" boyutundadır
+        int signatureChoice = getUserChoice();
+        int size = 8; // Signature sandwiches are typically 8"
 
-        Sandwich signatureSandwich = null; // İmzalı sandviç nesnesi
+        Sandwich signatureSandwich = null;
         switch (signatureChoice) {
             case 1:
-                signatureSandwich = SignatureSandwich.createBLT(size); // BLT oluştur
+                signatureSandwich = SignatureSandwich.createBLT(size);
                 break;
             case 2:
-                signatureSandwich = SignatureSandwich.createPhillyCheeseSteak(size); // Philly Cheese Steak oluştur
-                break;
+                signatureSandwich = SignatureSandwich.createPhillyCheeseSteak(size);
             default:
-                System.out.println("Invalid signature sandwich choice."); // Geçersiz seçim mesajı
+                System.out.println("Invalid signature sandwich choice.");
                 return;
         }
 
-        addSandwich(signatureSandwich); // İmzalı sandviçi siparişe ekle
-        System.out.println(signatureSandwich.getBreadType() + " " + signatureSandwich.getSize() + "\" " + "Signature Sandwich added to order."); // Eklendi mesajı
+        addSandwich(signatureSandwich);
+        System.out.println(signatureSandwich.getBreadType() + " " + signatureSandwich.getSize() + "\" " + "Signature Sandwich added to order.");
     }
 
     // Guides the user through building a custom sandwich, allowing comma-separated inputs for toppings.
-    // Kullanıcıya özel sandviç oluşturma sürecinde rehberlik eder, toppingler için virgülle ayrılmış girdilere izin verir.
     private void addCustomSandwich() {
-        System.out.println("\n--- Build Custom Sandwich ---"); // Özel sandviç oluştur başlığı
+        System.out.println("\n--- Build Custom Sandwich ---");
 
-        System.out.print("Select your bread (white, wheat, rye, wrap): "); // Ekmek türü iste
+        System.out.print("Select your bread (white, wheat, rye, wrap): ");
         String bread = scanner.nextLine();
 
-        int size = 0; // Boyut değişkeni
-        boolean validSize = false; // Geçerli boyut kontrolü
+        int size = 0;
+        boolean validSize = false;
         while (!validSize) {
-            System.out.print("Select sandwich size (4, 8, 12): "); // Boyut iste
-            size = getUserChoice(); // Boyutu al
+            System.out.print("Select sandwich size (4, 8, 12): ");
+            size = getUserChoice();
             if (size == 4 || size == 8 || size == 12) {
-                validSize = true; // Geçerli boyut
+                validSize = true;
             } else {
-                System.out.println("Invalid size. Please choose 4, 8, or 12."); // Geçersiz boyut mesajı
+                System.out.println("Invalid size. Please choose 4, 8, or 12.");
             }
         }
 
-        Sandwich newSandwich = new Sandwich(size, bread); // Yeni sandviç nesnesi oluştur
+        Sandwich newSandwich = new Sandwich(size, bread);
 
-        System.out.print("Would you like the sandwich toasted (Y/N)? "); // Kızartma isteği
+        System.out.print("Would you like the sandwich toasted (Y/N)? ");
         String toastedInput = scanner.nextLine().trim().toUpperCase();
-        newSandwich.setToasted(toastedInput.equals("Y")); // Kızartma durumunu ayarla
+        newSandwich.setToasted(toastedInput.equals("Y"));
 
         // Add Meats
-        System.out.println("\n--- Add Meats ---"); // Et ekleme başlığı
-        System.out.println("Available: steak, ham, salami, roast beef, chicken, bacon"); // Mevcut etler
-        System.out.print("Enter meat types (comma-separated, leave blank for none): "); // Et türleri iste
-        String meatInputLine = scanner.nextLine().trim(); // Tüm satırı al
-        if (!meatInputLine.isEmpty()) { // Boş değilse işle
-            String[] meatTypes = meatInputLine.split(","); // Virgülle ayır
-            for (String meatType : meatTypes) { // Her bir et türü için
-                String trimmedMeatType = meatType.trim(); // Boşlukları temizle
-                if (!trimmedMeatType.isEmpty()) { // Boş değilse
-                    System.out.print("Add extra " + trimmedMeatType + " (Y/N)? "); // Ekstra et isteği
+        System.out.println("\n--- Add Meats ---");
+        System.out.println("Available: steak, ham, salami, roast beef, chicken, bacon");
+        System.out.print("Enter meat types (comma-separated, leave blank for none): ");
+        String meatInputLine = scanner.nextLine().trim();
+        if (!meatInputLine.isEmpty()) {
+            String[] meatTypes = meatInputLine.split(",");
+            for (String meatType : meatTypes) {
+                String trimmedMeatType = meatType.trim();
+                if (!trimmedMeatType.isEmpty()) {
+                    System.out.print("Add extra " + trimmedMeatType + " (Y/N)? ");
                     boolean isExtraMeat = scanner.nextLine().trim().toUpperCase().equals("Y");
-                    newSandwich.addMeat(new Topping(trimmedMeatType, true, isExtraMeat)); // Eti sandviçe ekle
-                    System.out.println(trimmedMeatType + " added."); // Eklendi mesajı
+                    newSandwich.addMeat(new Topping(trimmedMeatType, true, isExtraMeat));
+                    System.out.println(trimmedMeatType + " added.");
                 }
             }
         }
 
         // Add Cheeses
-        System.out.println("\n--- Add Cheeses ---"); // Peynir ekleme başlığı
-        System.out.println("Available: american, provolone, cheddar, swiss"); // Mevcut peynirler
-        System.out.print("Enter cheese types (comma-separated, leave blank for none): "); // Peynir türleri iste
-        String cheeseInputLine = scanner.nextLine().trim(); // Tüm satırı al
-        if (!cheeseInputLine.isEmpty()) { // Boş değilse işle
-            String[] cheeseTypes = cheeseInputLine.split(","); // Virgülle ayır
-            for (String cheeseType : cheeseTypes) { // Her bir peynir türü için
-                String trimmedCheeseType = cheeseType.trim(); // Boşlukları temizle
-                if (!trimmedCheeseType.isEmpty()) { // Boş değilse
-                    System.out.print("Add extra " + trimmedCheeseType + " (Y/N)? "); // Ekstra peynir isteği
+        System.out.println("\n--- Add Cheeses ---");
+        System.out.println("Available: american, provolone, cheddar, swiss");
+        System.out.print("Enter cheese types (comma-separated, leave blank for none): ");
+        String cheeseInputLine = scanner.nextLine().trim();
+        if (!cheeseInputLine.isEmpty()) {
+            String[] cheeseTypes = cheeseInputLine.split(",");
+            for (String cheeseType : cheeseTypes) {
+                String trimmedCheeseType = cheeseType.trim();
+                if (!trimmedCheeseType.isEmpty()) {
+                    System.out.print("Add extra " + trimmedCheeseType + " (Y/N)? ");
                     boolean isExtraCheese = scanner.nextLine().trim().toUpperCase().equals("Y");
-                    newSandwich.addCheese(new Topping(trimmedCheeseType, true, isExtraCheese)); // Peyniri sandviçe ekle
-                    System.out.println(trimmedCheeseType + " added."); // Eklendi mesajı
+                    newSandwich.addCheese(new Topping(trimmedCheeseType, true, isExtraCheese));
+                    System.out.println(trimmedCheeseType + " added.");
                 }
             }
         }
 
         // Add Regular Toppings
-        System.out.println("\n--- Add Regular Toppings ---"); // Normal topping ekleme başlığı
-        System.out.println("Available: lettuce, peppers, onions, tomatoes, jalapeños, cucumbers, pickles, guacamole, mushrooms"); // Mevcut normal toppingler
-        System.out.print("Enter toppings (comma-separated, leave blank for none): "); // Topping türleri iste
-        String regularToppingInputLine = scanner.nextLine().trim(); // Tüm satırı al
-        if (!regularToppingInputLine.isEmpty()) { // Boş değilse işle
-            String[] regularToppingTypes = regularToppingInputLine.split(","); // Virgülle ayır
-            for (String toppingType : regularToppingTypes) { // Her bir topping türü için
-                String trimmedToppingType = toppingType.trim(); // Boşlukları temizle
-                if (!trimmedToppingType.isEmpty()) { // Boş değilse
-                    newSandwich.addRegularTopping(new Topping(trimmedToppingType, false, false)); // Toppingi sandviçe ekle
-                    System.out.println(trimmedToppingType + " added."); // Eklendi mesajı
+        System.out.println("\n--- Add Regular Toppings ---");
+        System.out.println("Available: lettuce, peppers, onions, tomatoes, jalapeños, cucumbers, pickles, guacamole, mushrooms");
+        System.out.print("Enter toppings (comma-separated, leave blank for none): ");
+        String regularToppingInputLine = scanner.nextLine().trim();
+        if (!regularToppingInputLine.isEmpty()) {
+            String[] regularToppingTypes = regularToppingInputLine.split(",");
+            for (String toppingType : regularToppingTypes) {
+                String trimmedToppingType = toppingType.trim();
+                if (!trimmedToppingType.isEmpty()) {
+                    newSandwich.addRegularTopping(new Topping(trimmedToppingType, false, false));
+                    System.out.println(trimmedToppingType + " added.");
                 }
             }
         }
 
         // Add Sauces
-        System.out.println("\n--- Add Sauces ---"); // Sos ekleme başlığı
-        System.out.println("Available: mayo, mustard, ketchup, ranch, thousand islands, vinaigrette, au jus"); // Mevcut soslar
-        System.out.print("Enter sauces (comma-separated, leave blank for none): "); // Sos türleri iste
-        String sauceInputLine = scanner.nextLine().trim(); // Tüm satırı al
-        if (!sauceInputLine.isEmpty()) { // Boş değilse işle
-            String[] sauceTypes = sauceInputLine.split(","); // Virgülle ayır
-            for (String sauceType : sauceTypes) { // Her bir sos türü için
-                String trimmedSauceType = sauceType.trim(); // Boşlukları temizle
-                if (!trimmedSauceType.isEmpty()) { // Boş değilse
-                    newSandwich.addSauce(trimmedSauceType); // Sosu sandviçe ekle
-                    System.out.println(trimmedSauceType + " added."); // Eklendi mesajı
+        System.out.println("\n--- Add Sauces ---");
+        System.out.println("Available: mayo, mustard, ketchup, ranch, thousand islands, vinaigrette, au jus");
+        System.out.print("Enter sauces (comma-separated, leave blank for none): ");
+        String sauceInputLine = scanner.nextLine().trim();
+        if (!sauceInputLine.isEmpty()) {
+            String[] sauceTypes = sauceInputLine.split(",");
+            for (String sauceType : sauceTypes) {
+                String trimmedSauceType = sauceType.trim();
+                if (!trimmedSauceType.isEmpty()) {
+                    newSandwich.addSauce(trimmedSauceType);
+                    System.out.println(trimmedSauceType + " added.");
                 }
             }
         }
 
-        addSandwich(newSandwich); // Oluşturulan sandviçi siparişe ekle
-        System.out.println("Custom sandwich successfully added to order."); // Başarıyla eklendi mesajı
+        addSandwich(newSandwich);
+        System.out.println("Custom sandwich successfully added to order.");
     }
 
 
     // Guides the user through adding a drink to the current order.
     private void addDrinkToOrder() {
-        System.out.println("\n--- Add Drink ---"); // İçecek ekle başlığı
-        System.out.print("Enter drink size (Small, Medium, Large): "); // Boyut iste
+        System.out.println("\n--- Add Drink ---"); //
+        System.out.print("Enter drink size (Small, Medium, Large): ");
         String size = scanner.nextLine();
-        System.out.print("Enter drink flavor (e.g., Cola, Sprite): "); // Tat iste
+        System.out.print("Enter drink flavor (e.g., Cola, Sprite): ");
         String flavor = scanner.nextLine();
-        addDrink(new Drink(size, flavor)); // İçeceği siparişe ekle
-        System.out.println("Drink successfully added to order."); // Başarıyla eklendi mesajı
+        addDrink(new Drink(size, flavor));
+        System.out.println("Drink successfully added to order.");
     }
 
     // Guides the user through adding chips to the current order.
     private void addChipsToOrder() {
-        System.out.println("\n--- Add Chips ---"); // Cips ekle başlığı
-        System.out.print("Enter chip type (e.g., Regular, Cheesy): "); // Tür iste
+        System.out.println("\n--- Add Chips ---");
+        System.out.print("Enter chip type (e.g., Regular, Cheesy): ");
         String type = scanner.nextLine();
-        addChip(new Chip(type)); // Cipsi siparişe ekle
-        System.out.println("Chips successfully added to order."); // Başarıyla eklendi mesajı
+        addChip(new Chip(type));
+        System.out.println("Chips successfully added to order.");
     }
 
     // Handles the checkout process, displaying order details and saving the receipt.
     private void checkoutOrder() {
-        System.out.println("\n--- Order Summary & Checkout ---"); // Ödeme başlığı
-        displayOrderDetails(); // Sipariş detaylarını göster
+        System.out.println("\n--- Order Summary & Checkout ---");
+        displayOrderDetails();
 
-        System.out.print("Confirm order (Y/N) or Cancel (0): "); // Onay veya iptal isteği
-        String confirmation = scanner.nextLine().trim().toUpperCase(); // Girdiyi al
+        System.out.print("Confirm order (Y/N) or Cancel (0): ");
+        String confirmation = scanner.nextLine().trim().toUpperCase();
 
         if (confirmation.equals("Y")) {
-            ReceiptWriter.saveReceipt(this); // Fişi kaydet (bu Order nesnesini gönder)
-            System.out.println("Order successfully completed and receipt generated."); // Başarıyla tamamlandı mesajı
+            ReceiptWriter.saveReceipt(this);
+            System.out.println("Order successfully completed and receipt generated.");
         } else if (confirmation.equals("0")) {
-            cancelOrder(); // Siparişi iptal et
+            cancelOrder();
         } else {
-            System.out.println("Order not confirmed or cancelled. Returning to order menu."); // Onaylanmadı mesajı
+            System.out.println("Order not confirmed or cancelled. Returning to order menu.");
         }
     }
 
     // Cancels the current order.
     private void cancelOrder() {
-        this.sandwiches.clear(); // Sandviçleri temizle
-        this.drinks.clear(); // İçecekleri temizle
-        this.chips.clear(); // Cipsleri temizle
-        System.out.println("Order cancelled and cleared."); // İptal edildi mesajı
+        this.sandwiches.clear();
+        this.drinks.clear();
+        this.chips.clear();
+        System.out.println("Order cancelled and cleared.");
     }
 }

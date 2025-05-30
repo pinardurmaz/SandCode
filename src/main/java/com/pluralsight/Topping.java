@@ -1,32 +1,31 @@
-package com.pluralsight; // Paket bildirimi
+package com.pluralsight;
 
 public class Topping {
-    private String name; // Name of the topping (e.g., "steak", "cheddar", "lettuce") - Toppingin adı
-    private boolean isPremium; // True if it's a premium topping (meat/cheese), false otherwise - Premium topping olup olmadığı (et/peynir ise true)
-    private boolean isExtra; // True if the topping is added as extra - Toppingin ekstra eklenip eklenmediği
+    private String name; // Name of the topping (e.g., "steak", "cheddar", "lettuce")
+    private boolean isPremium; // True if it's a premium topping (meat/cheese), false otherwise -
+    private boolean isExtra; // True if the topping is added as extra
 
-    public Topping(String name, boolean isPremium, boolean isExtra) { // Constructor for Topping class - Topping sınıfının yapıcı metodu
-        this.name = name; // Adı ayarla
-        this.isPremium = isPremium; // Premium durumunu ayarla
-        this.isExtra = isExtra; // Ekstra durumunu ayarla
+    public Topping(String name, boolean isPremium, boolean isExtra) { // Constructor for Topping class
+        this.name = name;
+        this.isPremium = isPremium;
+        this.isExtra = isExtra;
     }
 
-    // Getters for topping properties - Topping özelliklerinin getter metotları
+    // Getters for topping properties
     public String getName() { return name; }
     public boolean isPremium() { return isPremium; }
     public boolean isExtra() { return isExtra; }
 
     // Calculates the cost of the topping based on sandwich size and whether it's extra.
-    // Toppingin maliyetini sandviç boyutuna ve ekstra olup olmadığına göre hesaplar.
     public double getCost(int size) {
         if (!isPremium) {
-            return 0.0; // Regular toppings and sauces are free - Normal toppingler ve soslar ücretsiz
+            return 0.0; // Regular toppings and sauces are free
         }
 
-        double baseCost = 0.0; // Temel maliyet
-        double extraCost = 0.0; // Ekstra maliyet
+        double baseCost = 0.0;
+        double extraCost = 0.0;
 
-        // Determine base and extra cost for meats - Etler için temel ve ekstra maliyeti belirle
+        // Determine base and extra cost for meats
         if (name.equalsIgnoreCase("steak") || name.equalsIgnoreCase("ham") ||
                 name.equalsIgnoreCase("salami") || name.equalsIgnoreCase("roast beef") ||
                 name.equalsIgnoreCase("chicken") || name.equalsIgnoreCase("bacon")) {
@@ -36,7 +35,7 @@ public class Topping {
                 case 12: baseCost = 3.00; extraCost = 1.50; break;
             }
         }
-        // Determine base and extra cost for cheeses - Peynirler için temel ve ekstra maliyeti belirle
+        // Determine base and extra cost for cheeses
         else if (name.equalsIgnoreCase("american") || name.equalsIgnoreCase("provolone") ||
                 name.equalsIgnoreCase("cheddar") || name.equalsIgnoreCase("swiss")) {
             switch (size) {
@@ -45,8 +44,8 @@ public class Topping {
                 case 12: baseCost = 2.25; extraCost = 0.90; break;
             }
         }
-        // Add more premium toppings here if needed - Gerekirse buraya daha fazla premium topping ekle
+        // Add more premium toppings here if needed
 
-        return baseCost + (isExtra ? extraCost : 0.0); // Temel maliyete ekstra maliyeti ekle (eğer ekstra ise)
+        return baseCost + (isExtra ? extraCost : 0.0);
     }
 }

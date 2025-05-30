@@ -1,17 +1,17 @@
-package com.pluralsight; // Paket bildirimi
+package com.pluralsight;
 
 public class Chip {
-    private String type; // Type of chips (e.g., "Regular", "Cheesy") - Cips türü
+    private String type; // Type of chips (e.g., "Regular", "Cheesy")
 
-    public Chip(String type) { // Constructor for Chip class - Cips sınıfının yapıcı metodu
-        this.type = type; // Türü ayarla
+    public Chip(String type) { // Constructor for Chip class
+        this.type = type;
     }
 
-    // Getter for chip type - Cips türünün getter metodu
+    // Getter for chip type
     public String getType() { return type; }
 
-    // Calculates the cost of the chips (fixed price) - Cipsin maliyetini hesaplar (sabit fiyat)
+    // Calculates the cost of the chips (sabit)
     public double getCost() {
-        return 1.50; // Fixed price for chips - Cipsler için sabit fiyat
+        return 1.50;
     }
 }
